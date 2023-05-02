@@ -70,6 +70,19 @@ echo "Removing files..."
 hash -r
 endgroup
 
+begingroup "Uninstalling preinstalled JDKs"
+# Move directories to /opt/off
+echo "Moving directories..."
+/usr/bin/sudo /usr/bin/find $HOME/hostedtoolcache -iname '*Java*' -mindepth 1 -maxdepth 1 -type d -print -exec /bin/mv {} /opt/off/ \;
+
+# Unlink files
+echo "Removing files..."
+/usr/bin/sudo /usr/bin/find $HOME/hostedtoolcache -iname '*Java*' -mindepth 1 -maxdepth 1 -type f -print -delete
+
+# Rehash to forget about the deleted files
+hash -r
+endgroup
+
 
 begingroup "Installing getopt"
 # Install getopt required by mpbb
